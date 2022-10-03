@@ -1,4 +1,6 @@
 const fs = require('fs');
+const archiver = require ('archiver');
+const { exec } = require('child_process');
 /*
 let employees = [
 	{
@@ -108,7 +110,7 @@ const search = (id) => {
 };
 //Busqueda de usuario
 search(1);
-//2
+//2*/
 fs.readFile('./resumen.app1.5.txt', function(err, data) {
 	if (err) {
 		console.log(err);
@@ -121,9 +123,9 @@ ${readFile}`;
 		console.log(fileMessage);
 	}, 4000);
 });
-*/
+
 //3
-const archiver = require ('archiver');
+/*
 var filePath = './' // Obtener la ruta del archivo
 var dirList = fs.readdirSync (filePath); // Obtener lista de archivos
 var zipPath = './resumen.app1.5.zip'; // Ruta de generación de paquetes comprimidos
@@ -136,3 +138,51 @@ var archive = archiver('zip', {
        level: level
    }
 });
+//2.1 el programa cantara una pequeña cancion de daftpunk que conlleva una letra muy elaborada (ironicamente hablando) para hacer una pausa relajante
+let sing = numero => {
+    setTimeout(() => { 
+    if (numero === 0) {
+        return ;
+    }
+    pauseMessage = "Around the World"
+    console.log(pauseMessage);
+    return sing(numero - 1);
+}, 1000)
+};
+console.log(sing(8))
+//2.2
+exec('ls -lh', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`error: ${error.message}`);
+    return;
+  }
+
+  if (stderr) {
+    console.error(`stderr: ${stderr}`);
+    return;
+  }
+
+  console.log(`stdout:\n${stdout}`);
+});
+//n3
+*/
+const firstConvert = () => {
+    const newBuffer = Buffer.from('hola');
+    const hex = newBuffer.toString('hex');
+    const base64 = newBuffer.toString('base64');
+    fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log('Archivo hexadecimal creado');
+    });
+    fs.writeFile('./resumen.app1.5.base64.txt', base64, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        console.log('Archivo base64 creado');
+    });
+}
+firstConvert()
+
+
