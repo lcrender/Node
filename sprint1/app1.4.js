@@ -72,7 +72,7 @@ async function printEmployeer(searchId) {
 				clientFound = true;
 				let message = `Nombre: ${employees[i].name}
 Salario: ${salaries[i].salary}`;
-				fs.writeFile('./resumen.txt', message, function(err) {
+				fs.writeFile('./resumen.app1.4.txt', message, function(err) {
 					if (err) {
 						console.log(err);
 					}

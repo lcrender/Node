@@ -110,7 +110,7 @@ const search = (id) => {
 };
 //Busqueda de usuario
 search(1);
-//2*/
+//2
 fs.readFile('./resumen.app1.5.txt', function(err, data) {
 	if (err) {
 		console.log(err);
@@ -125,7 +125,7 @@ ${readFile}`;
 });
 
 //3
-/*
+
 var filePath = './' // Obtener la ruta del archivo
 var dirList = fs.readdirSync (filePath); // Obtener lista de archivos
 var zipPath = './resumen.app1.5.zip'; // Ruta de generación de paquetes comprimidos
@@ -165,9 +165,13 @@ exec('ls -lh', (error, stdout, stderr) => {
   console.log(`stdout:\n${stdout}`);
 });
 //n3
-*/
+
 const firstConvert = () => {
-    const newBuffer = Buffer.from('hola');
+    
+
+
+
+    const newBuffer = Buffer.from(result);
     const hex = newBuffer.toString('hex');
     const base64 = newBuffer.toString('base64');
     fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
@@ -182,7 +186,28 @@ const firstConvert = () => {
         }
         console.log('Archivo base64 creado');
     });
+
 }
 firstConvert()
-
-
+*/
+    fs.readFile('./resumen.app1.5.txt', function(err, data) {
+        if (err) {
+            console.log(err);
+        }
+        const readFile = data.toString();
+        const newBuffer = Buffer.from(readFile);
+        const hex = newBuffer.toString('hex');
+        const base64 = newBuffer.toString('base64');
+        fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Archivo hexadecimal creado');
+        });
+        fs.writeFile('./resumen.app1.5.base64.txt', base64, function(err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Archivo base64 creado');
+        });
+    });
