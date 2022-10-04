@@ -1,4 +1,4 @@
-//Nivel uno, ejercicio 1 / Nivel 2 ejercicio 2
+//Nivel uno, ejercicio 1 / Nivel 2 ejercicio 1
 function myName(userName, name, sur) {
 const user = userName;
 const firstName = name
@@ -18,7 +18,7 @@ const finEj = `_________________
 `
 console.log(finEj)
 
-//Nivel 2
+//Nivel 2 ejercicio 2
 //Esta funcion le añade 4 años a la fecha actual para establecer la fecha de renovacion del documento
 function expirationDate() {
     let date = new Date();
