@@ -38,7 +38,6 @@ Proximo vencimiento: ${expirationDate()}
 `);
 console.log(finEj)
 
-
 //nivel 3
 function funcCounter(){
     let array = []
