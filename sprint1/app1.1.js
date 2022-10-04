@@ -1,7 +1,24 @@
-const firstName = "Aldo";
-const surName = "Bonzi";
-const message = `Nombre: ${firstName}
-Apellido: ${surName}`;
+//Nivel uno, ejercicio 1 / Nivel 2 ejercicio 2
+function myName(userName, name, sur) {
+const user = userName;
+const firstName = name
+const surName = sur
+const messageOne = `
+Nombre de usuario: ${userName}
+
+Nombre: ${firstName}
+Apellido: ${surName}
+`
+//console.log(messageOne)
+return messageOne
+}
+
+console.log(myName("aldob", "Aldo", "Bonzi"))
+const finEj = `_________________
+`
+console.log(finEj)
+
+//Nivel 2
 //Esta funcion le añade 4 años a la fecha actual para establecer la fecha de renovacion del documento
 function expirationDate() {
     let date = new Date();
@@ -11,7 +28,7 @@ function expirationDate() {
     return output;
 }
 console.log(
-`${message}
+`${myName("aldob", "Aldo", "Bonzi")}
 
 Felizitaciones su licencia de conducir a sido renovada.
     
@@ -19,6 +36,9 @@ Proximo vencimiento: ${expirationDate()}
 
 
 `);
+console.log(finEj)
+
+
 //nivel 3
 function funcCounter(){
     let array = []
