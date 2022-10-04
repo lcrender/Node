@@ -163,34 +163,11 @@ exec('ls -lh', (error, stdout, stderr) => {
   }
 
   console.log(`stdout:\n${stdout}`);
-});
+});*/
 //n3
 
 const firstConvert = () => {
-    
-
-
-
-    const newBuffer = Buffer.from(result);
-    const hex = newBuffer.toString('hex');
-    const base64 = newBuffer.toString('base64');
-    fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('Archivo hexadecimal creado');
-    });
-    fs.writeFile('./resumen.app1.5.base64.txt', base64, function(err) {
-        if (err) {
-            console.log(err);
-        }
-        console.log('Archivo base64 creado');
-    });
-
-}
-firstConvert()
-*/
-    fs.readFile('./resumen.app1.5.txt', function(err, data) {
+        fs.readFile('./resumen.app1.5.txt', function(err, data) {
         if (err) {
             console.log(err);
         }
@@ -211,3 +188,8 @@ firstConvert()
             console.log('Archivo base64 creado');
         });
     });
+}
+//firstConvert()
+var crypto  = require( 'crypto' );
+var cipher  = crypto.createCipher( 'aes-192-ecb', datasources.api.auth.encryptionKey );
+
