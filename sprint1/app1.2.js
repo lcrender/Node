@@ -1,11 +1,12 @@
+//Nivel 1
 (() => {
 	console.log(2 + 8);
 })();
-//2
+//Nivel 2, ejercicio 1
 const createScenery = (scenary) => (this.scenary = scenary);
 console.log(createScenery('Ciudad Gotica'));
-console.log(typeof createScenery);
-//3
+//console.log(typeof createScenery);
+//Nivel 2, ejercicio 2. Nivel 3
 class Person {
 	name;
 	constructor(name) {
