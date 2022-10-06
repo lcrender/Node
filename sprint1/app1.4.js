@@ -27,6 +27,7 @@ let salaries = [
 		salary: 2000
 	}
 ];
+//Nivel 1, ejercicio 1 y 2
 const getEmployee = (searchId) => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
@@ -39,11 +40,11 @@ const getEmployee = (searchId) => {
 			} else {
 				i++;
 			}
-		} // termina el buscador
+		}
 		if (clientFound === false) {
 			reject(new Error('Empleado no encontrado.'));
 		}
-	}); //fin promesa
+	});
 };
 const getSalary = (searchId) => {
 	return new Promise((resolve, reject) => {
@@ -57,7 +58,7 @@ const getSalary = (searchId) => {
 			} else {
 				i++;
 			}
-		} // fin buscador
+		}
 		if (clientFound === false) {
 			reject(new Error('Usuario no encontrado.'));
 		}
@@ -101,7 +102,7 @@ async function search(id) {
 //busqueda de usuario
 search(1);
 
-//parte 2
+//Nivel 2 y Nivel 3
 const math = (n) => {
 	return new Promise((resolve, reject) => {
 		if (isNaN(n)) {
@@ -112,7 +113,6 @@ const math = (n) => {
 	});
 };
 async function add(n1, n2, n3) {
-	//const add = (n1, n2, n3)  => {
 	return new Promise((resolve, reject) => {
 		if (isNaN(n1, n2, n3)) {
 			reject(new Error('No es un numero.'));
