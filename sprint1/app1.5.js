@@ -1,6 +1,7 @@
 const fs = require('fs');
 const archiver = require ('archiver');
 const { exec } = require('child_process');
+
 /*
 let employees = [
 	{
@@ -31,7 +32,7 @@ let salaries = [
 		salary: 2000
 	}
 ];
-
+//Nivel 1, ejercicio 1
 const getEmployee = (searchId) => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
@@ -110,7 +111,7 @@ const search = (id) => {
 };
 //Busqueda de usuario
 search(1);
-//2
+//Nivel 1, ejercicio 2
 fs.readFile('./resumen.app1.5.txt', function(err, data) {
 	if (err) {
 		console.log(err);
@@ -124,7 +125,7 @@ ${readFile}`;
 	}, 4000);
 });
 
-//3
+//Nivel 1, ejercicio 3
 
 var filePath = './' // Obtener la ruta del archivo
 var dirList = fs.readdirSync (filePath); // Obtener lista de archivos
@@ -138,7 +139,8 @@ var archive = archiver('zip', {
        level: level
    }
 });
-//2.1 el programa cantara una pequeña cancion de daftpunk que conlleva una letra muy elaborada (ironicamente hablando) para hacer una pausa relajante
+//Nivel 2, ejercicio 1
+//El programa cantara una pequeña cancion de daftpunk que conlleva una letra muy elaborada (ironicamente hablando) para hacer una pausa relajante
 let sing = numero => {
     setTimeout(() => { 
     if (numero === 0) {
@@ -149,8 +151,10 @@ let sing = numero => {
     return sing(numero - 1);
 }, 1000)
 };
+// El numero 8 indica la cantidad de veces que se repetira el mensaje
 console.log(sing(8))
-//2.2
+
+//Nivel 2, ejercicio 2
 exec('ls -lh', (error, stdout, stderr) => {
   if (error) {
     console.error(`error: ${error.message}`);
@@ -164,7 +168,8 @@ exec('ls -lh', (error, stdout, stderr) => {
 
   console.log(`stdout:\n${stdout}`);
 });*/
-//n3
+
+//Nivel 3
 
 const firstConvert = () => {
         fs.readFile('./resumen.app1.5.txt', function(err, data) {
@@ -190,6 +195,6 @@ const firstConvert = () => {
     });
 }
 //firstConvert()
-var crypto  = require( 'crypto' );
-var cipher  = crypto.createCipher( 'aes-192-ecb', datasources.api.auth.encryptionKey );
+//var crypto  = require( 'crypto' );
+//var cipher  = crypto.createCipher( 'aes-192-ecb', datasources.api.auth.encryptionKey );
 
