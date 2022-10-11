@@ -8,7 +8,7 @@ const message = (age, callback) => {
         return callback(userAge)  
     }
 }
-let welcome = age => { 
+let welcome = (age) => { 
     if(age >= 18) {
         const welcomeMessage = console.log("Tienes mas de 18 años, eres bienvenido al club")
         return welcomeMessage;
@@ -19,7 +19,7 @@ let welcome = age => {
     }
 }
 //La funcion message va seguida de una edad y una funcion callback, en este caso un mensaje de bienvenida al club si es mayor o igual de 18 años.
-message("20", welcome);
+message("11", welcome);
 
 module.exports.message = message;
 module.exports.welcome = welcome;
