@@ -1,8 +1,8 @@
 const fs = require('fs');
-const archiver = require ('archiver');
+const archiver = require('archiver');
 const { exec } = require('child_process');
 
-/*
+
 let employees = [
 	{
 		id: 1,
@@ -167,34 +167,33 @@ exec('ls -lh', (error, stdout, stderr) => {
   }
 
   console.log(`stdout:\n${stdout}`);
-});*/
+});
 
 //Nivel 3
 
 const firstConvert = () => {
-        fs.readFile('./resumen.app1.5.txt', function(err, data) {
-        if (err) {
-            console.log(err);
-        }
-        const readFile = data.toString();
-        const newBuffer = Buffer.from(readFile);
-        const hex = newBuffer.toString('hex');
-        const base64 = newBuffer.toString('base64');
-        fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
-            if (err) {
-                console.log(err);
-            }
-            console.log('Archivo hexadecimal creado');
-        });
-        fs.writeFile('./resumen.app1.5.base64.txt', base64, function(err) {
-            if (err) {
-                console.log(err);
-            }
-            console.log('Archivo base64 creado');
-        });
-    });
-}
+	fs.readFile('./resumen.app1.5.txt', function(err, data) {
+		if (err) {
+			console.log(err);
+		}
+		const readFile = data.toString();
+		const newBuffer = Buffer.from(readFile);
+		const hex = newBuffer.toString('hex');
+		const base64 = newBuffer.toString('base64');
+		fs.writeFile('./resumen.app1.5.hex.txt', hex, function(err) {
+			if (err) {
+				console.log(err);
+			}
+			console.log('Archivo hexadecimal creado');
+		});
+		fs.writeFile('./resumen.app1.5.base64.txt', base64, function(err) {
+			if (err) {
+				console.log(err);
+			}
+			console.log('Archivo base64 creado');
+		});
+	});
+};
 //firstConvert()
 //var crypto  = require( 'crypto' );
 //var cipher  = crypto.createCipher( 'aes-192-ecb', datasources.api.auth.encryptionKey );
-
