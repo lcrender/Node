@@ -4,16 +4,16 @@ function myName(userName, name, sur) {
 	const firstName = name;
 	const surName = sur;
 	const messageOne = `
-Nombre de usuario: ${userName}
+Nombre de usuario: ${user}
 
 Nombre: ${firstName}
 Apellido: ${surName}
-`;
+`
 
-	return console.log(messageOne);
-}
+	return messageOne
+};
 
-myName('aldob', 'Aldo', 'Bonzi');
+console.log(myName('aldob', 'Aldo', 'Bonzi'))
 
 const finEj = `_________________
 `;
@@ -33,8 +33,8 @@ function expirationDate() {
 		expirationDate;
 	return output;
 }
-console.log(
-	`${myName('aldob', 'Aldo', 'Bonzi')}
+
+console.log(`${myName('aldob', 'Aldo', 'Bonzi')}
 
 Felizitaciones su licencia de conducir a sido renovada.
     
@@ -67,6 +67,6 @@ function funcTen() {
 funcTen();
 //ejercicio n3.2 funcion autoejecutable
 
-(function(name) {
+autoName = (function(name) {
 	console.log(name);
 })('Aldo');
