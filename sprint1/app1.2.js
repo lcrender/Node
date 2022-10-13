@@ -1,7 +1,8 @@
 //Nivel 1
-(() => {
-	console.log(2 + 8);
-})();
+console.log((( num1, num2 ) => {
+    return ( num1 + num2 );
+  })( 2, 8 ))
+
 //Nivel 2, ejercicio 1
 const createScenery = (scenary) => (this.scenary = scenary);
 console.log(createScenery('Ciudad Gotica'));
