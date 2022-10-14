@@ -1,10 +1,13 @@
-//Nivel uno, ejercicio 1 / Nivel 2 ejercicio 1
-function myName(userName, name, sur) {
-	const user = userName;
+//Nivel 1
+function userName(userName) {
+	return console.log(userName);
+}
+//Nivel 2
+userName('aldob')
+function myName(name, sur) {
 	const firstName = name;
 	const surName = sur;
 	const messageOne = `
-Nombre de usuario: ${user}
 
 Nombre: ${firstName}
 Apellido: ${surName}
@@ -12,61 +15,30 @@ Apellido: ${surName}
 
 	return messageOne
 };
+console.log(`${myName('Aldo', 'Bonzi')}
 
-console.log(myName('aldob', 'Aldo', 'Bonzi'))
-
-const finEj = `_________________
-`;
-console.log(finEj); //fin ejercicio
-
-//Nivel 2 ejercicio 2
-//Esta funcion le añade 4 años a la fecha actual para establecer la fecha de renovacion del documento
-function expirationDate() {
-	let date = new Date();
-	let year = date.getFullYear();
-	let expirationDate = year + 4;
-	let output =
-		String(date.getDate()).padStart(2, '0') +
-		'/' +
-		String(date.getMonth() + 1).padStart(2, '0') +
-		'/' +
-		expirationDate;
-	return output;
-}
-
-console.log(`${myName('aldob', 'Aldo', 'Bonzi')}
-
-Felizitaciones su licencia de conducir a sido renovada.
+Bienvenido al club!
     
-Proximo vencimiento: ${expirationDate()}
-
-
 `
 );
-console.log(finEj); //fin ejercicio
-
-//nivel 3
-let array = [];
-
-function funcCounter() {
-	let c = [];
-	for (i = 0; i < 10; ) {
-		c.push(i);
-		console.log(c[i]);
-		i = i + 1;
-	}
-	console.log(`
-`);
-}
-
+//Nivel 3, Ejercicio 1
 function funcTen() {
 	for (c = 0; c < 10; c++) {
-		array.push(funcCounter());
+		console.log(`
+Vuelta nº ${c + 1}
+`);
+		funcCounter();
+		function funcCounter() {
+			let c = 0;
+			for (i = 0; i < 10; ) {
+				console.log(i);
+				i = i + 1;
+			}
+		}
 	}
 }
 funcTen();
-//ejercicio n3.2 funcion autoejecutable
-
+//Nivel 3, ejercicio 2
 autoName = (function(name) {
 	console.log(name);
 })('Aldo');
