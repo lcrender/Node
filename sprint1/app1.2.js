@@ -4,10 +4,31 @@ console.log((( num1, num2 ) => {
   })( 2, 8 ))
 
 //Nivel 2, ejercicio 1
-const createScenery = (scenary) => (this.scenary = scenary);
-console.log(createScenery('Ciudad Gotica'));
-//console.log(typeof createScenery);
-//Nivel 2, ejercicio 2. Nivel 3
+const createScenery = (scenary) => {
+    let obj = new Object()
+    obj.ciudad = scenary
+    return obj
+}
+//Ejemplo para probar la funcion
+//console.log(createScenery("Ciudad Gotica"))
+
+//Nivel 2, ejercicio 2
+class Persona {
+	nom;
+	constructor(nom) {
+		this.nom = nom;
+	}
+	dirNom(nom) {
+		return console.log(this.nom);
+	}
+}
+const newPersona = new Persona('Batman');
+newPersona.dirNom();
+
+//Nivel 3
+
+
+
 class Person {
 	name;
 	constructor(name) {
