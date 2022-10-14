@@ -2,8 +2,8 @@
 function userName(userName) {
 	return console.log(userName);
 }
-//Nivel 2
 userName('aldob')
+//Nivel 2
 function myName(name, sur) {
 	const firstName = name;
 	const surName = sur;
