@@ -1,4 +1,3 @@
-const fs = require('fs');
 let employees = [
 	{
 		id: 1,
@@ -27,7 +26,7 @@ let salaries = [
 		salary: 2000
 	}
 ];
-//Nivel 1, ejercicio 1 y 2
+//Nivel 1, ejercicio 1
 const getEmployee = (searchId) => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
@@ -35,108 +34,84 @@ const getEmployee = (searchId) => {
 		while (i < employees.length && clientFound === false) {
 			if (searchId === employees[i].id) {
 				clientFound = true;
-				const employeeName = employees[i].name;
-				resolve(employeeName);
+				resolve(employees[i].name);
 			} else {
 				i++;
 			}
-		}
+		} // termina el buscador
 		if (clientFound === false) {
 			reject(new Error('Empleado no encontrado.'));
 		}
-	});
+	}); //fin promesa
 };
-const getSalary = (searchId) => {
+const getSalary = (employeeId) => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
 		let clientFound = false;
 		while (i < employees.length && clientFound === false) {
-			if (searchId === employees[i].id) {
+			if (employeeId === employees[i].id) {
 				clientFound = true;
-				const employeeSalary = salaries[i].salary;
-				resolve(employeeSalary);
+				resolve(salaries[i].salary);
 			} else {
 				i++;
 			}
 		}
 		if (clientFound === false) {
-			reject(new Error('Usuario no encontrado.'));
+			reject(new Error('El id del empleado no existe'));
 		}
 	});
 };
-async function printEmployeer(searchId) {
-	return new Promise((resolve, reject) => {
-		let i = 0;
-		let clientFound = false;
-		while (i < employees.length && clientFound === false) {
-			if (searchId === employees[i].id) {
-				clientFound = true;
-				let message = `Nombre: ${employees[i].name}
-Salario: ${salaries[i].salary}`;
-				fs.writeFile('./resumen.app1.4.txt', message, function(err) {
-					if (err) {
-						console.log(err);
-					}
-					console.log('Archivo creado');
-				});
-			}
-		}
-	});
-}
 async function search(id) {
-	getEmployee(id)
-		.then((res) => {
-			console.log('Usuario Encontrado');
-			console.log(res);
-		})
-		.catch((err) => {
-			console.log(err.message);
-		});
-	getSalary(id).then((res) => {
-		console.log(res);
-	});
-	setTimeout(() => {
-		printEmployeer(id);
-	}, 2000);
+	const employeeMsj = await getEmployee(id);
+	const salaryMsj = await getSalary(id);
+	const resumenMsj = employeeMsj + ' ' + salaryMsj;
+	return console.log(resumenMsj);
 }
-//busqueda de usuario
-search(1);
+//Ejecuta las funciones getEmployee y getSalary anidadas
+search(1).catch((err) => {
+	console.log(err.message);
+});
 
-//Nivel 2 y Nivel 3
+//Nivel 1, ejercicio 2
+//esta funcion saluda a alguien despues de 2000ms
+const goodbye = (name) => {
+	return new Promise((resolve) => {
+		const bye = `Gracias por su consulta ${name}`;
+		setTimeout(() => {
+			resolve(bye);
+		}, 2000);
+	});
+};
+async function sayGoodbye(name) {
+	const bye = await goodbye(name);
+	return console.log(bye);
+}
+//Ejecuta funcion saludar a alguien
+sayGoodbye('Humberto');
+
+//Nivel 2, ejercicio 1
+//Funcion para multiplicar por 2 un numero y mostrar el resultado despues de 2000 ms
 const math = (n) => {
 	return new Promise((resolve, reject) => {
 		if (isNaN(n)) {
-			reject(new Error('No es un numero.'));
+			reject(new Error('ERROR Eso no parece un numero!'));
 		} else {
-			resolve(n * 2);
+			const multy = n * 2;
+			setTimeout(() => {
+				resolve(multy);
+			}, 2000);
 		}
 	});
 };
+//funcion para sumar 3 numeros y multiplicar por 2
 async function add(n1, n2, n3) {
-	return new Promise((resolve, reject) => {
-		if (isNaN(n1, n2, n3)) {
-			reject(new Error('No es un numero.'));
-		} else {
-			let total = (n1 + n2 + n3) * 2;
-			resolve(total);
-		}
-	});
+	let total = n1 + n2 + n3;
+	const finalResult = await math(total);
+	//return finalResult;
+	return console.log(finalResult); //en el enunciado del ejercicio no pide que se muestre por consola pero yo lo agrego para poder ver el resultado correcto de la funcion.
 }
-setTimeout(() => {
-	math(22)
-		.then((res) => {
-			console.log(res);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-}, 2000);
-setTimeout(() => {
-	add(2, 4, 2)
-		.then((res) => {
-			console.log(res);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
-}, 4000);
+//Ejecuto funcion para sumar 3 numeros y multiplicar por 2
+add(4, 4, 8).catch((err) => {
+	console.log(err.message);
+});
+//Nivel 3 agrego los .catch
