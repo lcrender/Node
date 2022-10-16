@@ -1,20 +1,22 @@
 //Nivel 1, ejercicio 1
 //Cuando la constante haveBalance esta en "true" muestra el saldo de la cuenta por medio de la const balanceDetails
 //Cuando la constante haveBalance esta en "False" muestra el mensaje de error "No hay saldo"
-const haveBalance = true;
-const balance = new Promise((resolve, reject) => {
-	if (haveBalance === true) {
-		const balanceDetails = {
-			Eur: 8000,
-			Usd: 7300,
-			Ars: 2843578
-		};
-		resolve(balanceDetails);
-	} else {
-		reject(new Error('No hay saldo en su cuenta.'));
-	}
-});
-balance
+const haveBalance = false;
+const balance = () => {
+	return new Promise((resolve, reject) => {
+		if (haveBalance === true) {
+			const balanceDetails = {
+				Eur: 8000,
+				Usd: 7300,
+				Ars: 2843578
+			};
+			resolve(balanceDetails);
+		} else {
+			reject(new Error('No hay saldo en su cuenta.'));
+		}
+	});
+};
+balance()
 	.then((res) => {
 		console.log('El saldo total del usuario x es de:');
 		console.log(res);
@@ -26,7 +28,7 @@ fin de consulta
 	.catch((err) => {
 		console.log(err.message);
 	});
-    
+
 //Nivel 1, ejercicio 2
 const message = (age, callback) => {
 	const userAge = age;
@@ -37,19 +39,25 @@ const message = (age, callback) => {
 		return callback(userAge);
 	}
 };
+//Funcion Callback
 let welcome = (age) => {
 	if (age >= 18) {
+		//Primer mensaje
 		const welcomeMessage = console.log('Tienes mas de 18 años, eres bienvenido al club');
 		return welcomeMessage;
 	} else {
+		//Segundo mensaje
 		const notWelcomeMessage = console.log('Tienes menos de 18 años, NO eres bienvenido');
 		return notWelcomeMessage;
 	}
 };
 //La funcion message va seguida de una edad y una funcion callback, en este caso un mensaje de bienvenida al club si es mayor o igual de 18 años.
+//Primer mensaje de la funcion callback
 message('20', welcome);
+//Segundo mensaje de la funcion callback
+message('17', welcome);
 
-//Nivel 2, ejercicio 1, 2, 3. Nivel 3, ejercicio 1 
+//Nivel 2, ejercicio 1, 2, 3. Nivel 3, ejercicio 1
 let employees = [
 	{
 		id: 1,

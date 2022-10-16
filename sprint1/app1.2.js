@@ -28,7 +28,6 @@ newPersona.dirNom();
 //Nivel 3
 
 
-
 class Person {
 	name;
 	constructor(name) {
