@@ -1,7 +1,7 @@
 //Nivel 1, ejercicio 1
 //Cuando la constante haveBalance esta en "true" muestra el saldo de la cuenta por medio de la const balanceDetails
 //Cuando la constante haveBalance esta en "False" muestra el mensaje de error "No hay saldo"
-const haveBalance = false;
+const haveBalance = true;
 const balance = () => {
 	return new Promise((resolve, reject) => {
 		if (haveBalance === true) {
@@ -43,11 +43,17 @@ const message = (age, callback) => {
 let welcome = (age) => {
 	if (age >= 18) {
 		//Primer mensaje
-		const welcomeMessage = console.log('Tienes mas de 18 años, eres bienvenido al club');
+		const welcomeMessage = console.log(`Mensaje de bienvenida: 
+Tienes mas de 18 años, eres bienvenido al club
+
+`);
 		return welcomeMessage;
 	} else {
 		//Segundo mensaje
-		const notWelcomeMessage = console.log('Tienes menos de 18 años, NO eres bienvenido');
+		const notWelcomeMessage = console.log(`Mensaje de rechazo:
+Tienes menos de 18 años, NO eres bienvenido
+
+`);
 		return notWelcomeMessage;
 	}
 };
@@ -57,7 +63,7 @@ message('20', welcome);
 //Segundo mensaje de la funcion callback
 message('17', welcome);
 
-//Nivel 2, ejercicio 1, 2, 3. Nivel 3, ejercicio 1
+//Nivel 2 y 3
 let employees = [
 	{
 		id: 1,
@@ -87,15 +93,13 @@ let salaries = [
 	}
 ];
 const getEmployee = (searchId) => {
-	return new Promise((result, reject) => {
+	return new Promise((resolve, reject) => {
 		let i = 0;
 		let clientFound = false;
 		while (i < employees.length && clientFound === false) {
 			if (searchId === employees[i].id) {
-				clientFound = true;
-				const employeeName = employees[i].name;
-				const employeesFound = { Nombre: employeeName };
-				result(employeesFound);
+                clientFound = true
+                resolve (employees[i].name);
 			} else {
 				i++;
 			}
@@ -105,39 +109,39 @@ const getEmployee = (searchId) => {
 		}
 	}); //fin promesa
 };
-const getSalary = (searchId) => {
-	return new Promise((result, reject) => {
-		let i = 0;
+const getSalary = (employeeId) => {
+    return new Promise((resolve, reject) => {
+        let i = 0;
 		let clientFound = false;
 		while (i < employees.length && clientFound === false) {
-			if (searchId === employees[i].id) {
-				clientFound = true;
-				const employeeSalary = salaries[i].salary;
-				const salariesFound = { Salario: employeeSalary };
-				result(salariesFound);
+			if (employeeId === employees[i].id) {
+                clientFound = true
+                resolve (salaries[i].salary);
 			} else {
 				i++;
 			}
 		} // termina el buscador
 		if (clientFound === false) {
-			reject(new Error('Usuario no encontrado.'));
+			reject(new Error('El id del empleado no existe'));
 		}
 	}); //fin promesa
 };
+
 const search = (id) => {
-	getEmployee(id)
+    getEmployee(id)
 		.then((res) => {
-			console.log('Usuario Encontrado');
 			console.log(res);
 		})
 		.catch((err) => {
 			console.log(err.message);
 		});
-	getSalary(id)
-		.then((res) => {
-			console.log(res);
-		})
-		.catch((err) => {});
-};
-//busqueda de usuario
+    getSalary(id)
+        .then((res) => {
+        console.log(res);
+        })
+        .catch((err) => {
+             console.log(err.message);
+        });
+    };
+//Ejecuta las funciones getEmployee y getSalary anidadas
 search(1);
