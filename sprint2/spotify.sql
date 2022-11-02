@@ -23,11 +23,15 @@ DROP TABLE IF EXISTS `albumes_favoritos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `albumes_favoritos` (
-  `id.album.favorito` int NOT NULL AUTO_INCREMENT,
-  `id.album` int NOT NULL,
-  `id.usuario` int NOT NULL,
-  PRIMARY KEY (`id.album.favorito`),
-  UNIQUE KEY `id.album.favorito_UNIQUE` (`id.album.favorito`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_album` int NOT NULL,
+  `id_usuario` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.album.favorito_UNIQUE` (`id`),
+  KEY `fk_falbumes_idx` (`id_album`),
+  KEY `fk_fusuario_idx` (`id_usuario`),
+  CONSTRAINT `fk_falbumes` FOREIGN KEY (`id_album`) REFERENCES `albums` (`id`),
+  CONSTRAINT `fk_fusuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,13 +52,15 @@ DROP TABLE IF EXISTS `albums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `albums` (
-  `id.album` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `id.artista` int NOT NULL,
+  `id_artista` int NOT NULL,
   `creacion` datetime NOT NULL,
   `imagen` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.album`),
-  UNIQUE KEY `id.album_UNIQUE` (`id.album`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.album_UNIQUE` (`id`),
+  KEY `fk_artista_idx` (`id_artista`),
+  CONSTRAINT `fk_artista` FOREIGN KEY (`id_artista`) REFERENCES `artistas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -75,11 +81,11 @@ DROP TABLE IF EXISTS `artistas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `artistas` (
-  `id.artista` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `imagen` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.artista`),
-  UNIQUE KEY `id.artista_UNIQUE` (`id.artista`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.artista_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,11 +106,15 @@ DROP TABLE IF EXISTS `artistas_similares`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `artistas_similares` (
-  `id.artista.similar` int NOT NULL AUTO_INCREMENT,
-  `id.artista` int NOT NULL,
-  `id.artista.simil` int NOT NULL,
-  PRIMARY KEY (`id.artista.similar`),
-  UNIQUE KEY `id.artista.similar_UNIQUE` (`id.artista.similar`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_artista` int NOT NULL,
+  `id_artista_simil` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.artista.similar_UNIQUE` (`id`),
+  KEY `fk_sartista_idx` (`id_artista`),
+  KEY `fk_simil_idx` (`id_artista_simil`),
+  CONSTRAINT `fk_sartista` FOREIGN KEY (`id_artista`) REFERENCES `artistas` (`id`),
+  CONSTRAINT `fk_simil` FOREIGN KEY (`id_artista_simil`) REFERENCES `artistas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,13 +135,15 @@ DROP TABLE IF EXISTS `cancion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cancion` (
-  `id.cancion` int NOT NULL AUTO_INCREMENT,
-  `id.album` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_album` int NOT NULL,
   `titulo` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `duracion` datetime NOT NULL,
   `reproducciones` int NOT NULL,
-  PRIMARY KEY (`id.cancion`),
-  UNIQUE KEY `id.cancion_UNIQUE` (`id.cancion`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.cancion_UNIQUE` (`id`),
+  KEY `fk_calbum_idx` (`id_album`),
+  CONSTRAINT `fk_calbum` FOREIGN KEY (`id_album`) REFERENCES `albums` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -152,11 +164,15 @@ DROP TABLE IF EXISTS `canciones_favoritas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `canciones_favoritas` (
-  `id.cancion.favorita` int NOT NULL AUTO_INCREMENT,
-  `id.usuario` int NOT NULL,
-  `id.cancion` int NOT NULL,
-  PRIMARY KEY (`id.cancion.favorita`),
-  UNIQUE KEY `id.cancion.favorita_UNIQUE` (`id.cancion.favorita`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `id_cancion` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.cancion.favorita_UNIQUE` (`id`),
+  KEY `fk_cfusuario_idx` (`id_usuario`),
+  KEY `fk_cfcancion_idx` (`id_cancion`),
+  CONSTRAINT `fk_cfcancion` FOREIGN KEY (`id_cancion`) REFERENCES `cancion` (`id`),
+  CONSTRAINT `fk_cfusuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -178,10 +194,12 @@ DROP TABLE IF EXISTS `pagos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `pagos` (
   `numero_orden` int NOT NULL AUTO_INCREMENT,
-  `id.suscripcion` int NOT NULL,
+  `id_suscripcion` int NOT NULL,
   `total` float NOT NULL,
   PRIMARY KEY (`numero_orden`),
-  UNIQUE KEY `id.pagos_UNIQUE` (`numero_orden`)
+  UNIQUE KEY `id.pagos_UNIQUE` (`numero_orden`),
+  KEY `fk_psuscripcion_idx` (`id_suscripcion`),
+  CONSTRAINT `fk_psuscripcion` FOREIGN KEY (`id_suscripcion`) REFERENCES `suscripcion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -202,10 +220,10 @@ DROP TABLE IF EXISTS `paises`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `paises` (
-  `id.pais` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `pais` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.pais`),
-  UNIQUE KEY `id.pais_UNIQUE` (`id.pais`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.pais_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -226,10 +244,10 @@ DROP TABLE IF EXISTS `paypal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `paypal` (
-  `id.paypal` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `usuario` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.paypal`),
-  UNIQUE KEY `id.paypal_UNIQUE` (`id.paypal`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.paypal_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,16 +268,18 @@ DROP TABLE IF EXISTS `playlists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `playlists` (
-  `id.playlist` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `n_canciones` int NOT NULL,
   `fecha_creacion` datetime NOT NULL,
-  `id.usuario` int NOT NULL,
+  `id_usuario` int NOT NULL,
   `eliminada` tinyint(1) NOT NULL,
   `fecha_eliminada` datetime DEFAULT NULL,
   `compartida` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id.playlist`),
-  UNIQUE KEY `id.playlist_UNIQUE` (`id.playlist`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.playlist_UNIQUE` (`id`),
+  KEY `fk_pusuario_idx` (`id_usuario`),
+  CONSTRAINT `fk_pusuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -280,12 +300,16 @@ DROP TABLE IF EXISTS `playlists_compartidas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `playlists_compartidas` (
-  `id.playlist.compartida` int NOT NULL AUTO_INCREMENT,
-  `id.usuario` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
   `fecha_update` datetime NOT NULL,
-  `id.playlist` int NOT NULL,
-  PRIMARY KEY (`id.playlist.compartida`),
-  UNIQUE KEY `id.playlist.compartida_UNIQUE` (`id.playlist.compartida`)
+  `id_playlist` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.playlist.compartida_UNIQUE` (`id`),
+  KEY `fk_pcusuario_idx` (`id_usuario`),
+  KEY `fk_pcplaylist_idx` (`id_playlist`),
+  CONSTRAINT `fk_pcplaylist` FOREIGN KEY (`id_playlist`) REFERENCES `playlists` (`id`),
+  CONSTRAINT `fk_pcusuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -306,11 +330,15 @@ DROP TABLE IF EXISTS `seguidos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `seguidos` (
-  `id.seguido` int NOT NULL AUTO_INCREMENT,
-  `id.usuario` int NOT NULL,
-  `id.artista` int NOT NULL,
-  PRIMARY KEY (`id.seguido`),
-  UNIQUE KEY `id.seguido_UNIQUE` (`id.seguido`)
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_usuario` int NOT NULL,
+  `id_artista` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.seguido_UNIQUE` (`id`),
+  KEY `sk_susuario_idx` (`id_usuario`),
+  KEY `fk_scartista_idx` (`id_artista`),
+  CONSTRAINT `fk_scartista` FOREIGN KEY (`id_artista`) REFERENCES `artistas` (`id`),
+  CONSTRAINT `fk_susuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -331,14 +359,18 @@ DROP TABLE IF EXISTS `suscripcion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `suscripcion` (
-  `id.suscripcion` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `fecha_inicio` datetime NOT NULL,
   `fecha_renovacion` datetime NOT NULL,
   `forma_pago` tinyint(1) NOT NULL,
-  `id.tarjeta` int DEFAULT NULL,
-  `id.paypal` int DEFAULT NULL,
-  PRIMARY KEY (`id.suscripcion`),
-  UNIQUE KEY `id.suscripcion_UNIQUE` (`id.suscripcion`)
+  `id_tarjeta` int DEFAULT NULL,
+  `id_paypal` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.suscripcion_UNIQUE` (`id`),
+  KEY `fk_tarjeta_idx` (`id_tarjeta`),
+  KEY `fk_paypal_idx` (`id_paypal`),
+  CONSTRAINT `fk_paypal` FOREIGN KEY (`id_paypal`) REFERENCES `paypal` (`id`),
+  CONSTRAINT `fk_tarjeta` FOREIGN KEY (`id_tarjeta`) REFERENCES `tarjetas` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -359,12 +391,12 @@ DROP TABLE IF EXISTS `tarjetas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tarjetas` (
-  `id.tarjeta` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `numero` int NOT NULL,
   `vencimiento` datetime NOT NULL,
   `codigo` int NOT NULL,
-  PRIMARY KEY (`id.tarjeta`),
-  UNIQUE KEY `id.tarjetas_UNIQUE` (`id.tarjeta`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.tarjetas_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -385,18 +417,22 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
-  `id.usuario` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `usuario` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` datetime NOT NULL,
   `sexo` tinyint NOT NULL,
-  `id.pais` int NOT NULL,
+  `id_pais` int NOT NULL,
   `cp` int NOT NULL,
   `premium` tinyint NOT NULL,
-  `id.suscripcion` int DEFAULT NULL,
-  PRIMARY KEY (`id.usuario`),
-  UNIQUE KEY `id.usuario_UNIQUE` (`id.usuario`)
+  `id_suscripcion` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.usuario_UNIQUE` (`id`),
+  KEY `fk_pais_idx` (`id_pais`),
+  KEY `fk_suscripcion_idx` (`id_suscripcion`),
+  CONSTRAINT `fk_pais` FOREIGN KEY (`id_pais`) REFERENCES `paises` (`id`),
+  CONSTRAINT `fk_suscripcion` FOREIGN KEY (`id_suscripcion`) REFERENCES `suscripcion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -418,4 +454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-24 20:29:13
+-- Dump completed on 2022-11-02 21:11:19

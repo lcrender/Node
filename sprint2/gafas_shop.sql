@@ -23,16 +23,22 @@ DROP TABLE IF EXISTS `clientes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `clientes` (
-  `id.clientes` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `id.direccion` int DEFAULT NULL,
+  `id_direccion` int DEFAULT NULL,
   `telefono` varchar(13) COLLATE utf8_unicode_ci DEFAULT NULL,
   `email` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fecha.registro` datetime DEFAULT NULL,
-  `recomendado` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `id.cliente.recomendado` int DEFAULT NULL,
-  PRIMARY KEY (`id.clientes`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_registro` datetime DEFAULT NULL,
+  `recomendado` tinyint(1) DEFAULT NULL,
+  `id_cliente_recomendado` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.clientes_UNIQUE` (`id`),
+  KEY `fk_direccion_idx` (`id_direccion`),
+  KEY `fk_usdireccion_idx` (`id_direccion`),
+  KEY `fk_cliente_rec_idx` (`id_cliente_recomendado`),
+  CONSTRAINT `fk_cliente_rec` FOREIGN KEY (`id_cliente_recomendado`) REFERENCES `clientes` (`id`),
+  CONSTRAINT `fk_usdireccion` FOREIGN KEY (`id_direccion`) REFERENCES `direcciones` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +47,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (1,'Alan',NULL,NULL,NULL,NULL,NULL,NULL),(2,'Diego',NULL,NULL,NULL,NULL,NULL,NULL),(3,'Jose',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,16 +59,17 @@ DROP TABLE IF EXISTS `direcciones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `direcciones` (
-  `id.direccion` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `calle` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `numero` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `numero` int NOT NULL,
   `piso` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `puerta` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ciudad` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `cp` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `cp` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `pais` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.direccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +78,7 @@ CREATE TABLE `direcciones` (
 
 LOCK TABLES `direcciones` WRITE;
 /*!40000 ALTER TABLE `direcciones` DISABLE KEYS */;
+INSERT INTO `direcciones` VALUES (1,'Mitre',23,'1','2','Madrid','1231','España'),(2,'Gomez Bolaño',436,NULL,NULL,'Madrid','3232','España');
 /*!40000 ALTER TABLE `direcciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,10 +90,11 @@ DROP TABLE IF EXISTS `empleados`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `empleados` (
-  `id.empleado` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.empleado`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +103,7 @@ CREATE TABLE `empleados` (
 
 LOCK TABLES `empleados` WRITE;
 /*!40000 ALTER TABLE `empleados` DISABLE KEYS */;
+INSERT INTO `empleados` VALUES (1,'Marcos Lopez'),(2,'Juanita Papusota'),(3,'Jasinto Gomez');
 /*!40000 ALTER TABLE `empleados` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,17 +115,29 @@ DROP TABLE IF EXISTS `gafas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gafas` (
-  `id.gafas` int NOT NULL AUTO_INCREMENT,
-  `id.marca` int NOT NULL,
-  `id.cristal` int DEFAULT NULL,
-  `id.montura` int DEFAULT NULL,
-  `id.color` int DEFAULT NULL,
-  `id.vidrio` int DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_marca` int NOT NULL,
+  `id_cristal` int DEFAULT NULL,
+  `id_montura` int DEFAULT NULL,
+  `id_color_montura` int DEFAULT NULL,
+  `id_color_vidrio` int DEFAULT NULL,
   `precio` float DEFAULT NULL,
-  `id.proveedor` int DEFAULT NULL,
-  PRIMARY KEY (`id.gafas`),
-  UNIQUE KEY `idgafas_UNIQUE` (`id.gafas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id_proveedor` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idgafas_UNIQUE` (`id`),
+  KEY `fk_marca_idx` (`id_marca`),
+  KEY `fk_cristal_idx` (`id_cristal`),
+  KEY `fk_montura_idx` (`id_montura`),
+  KEY `fk_color_montura_idx` (`id_color_montura`),
+  KEY `fk_color_vidrio_idx` (`id_color_vidrio`),
+  KEY `fk_proveedor_idx` (`id_proveedor`),
+  CONSTRAINT `fk_color_montura` FOREIGN KEY (`id_color_montura`) REFERENCES `gafas_color_montura` (`id`),
+  CONSTRAINT `fk_color_vidrio` FOREIGN KEY (`id_color_vidrio`) REFERENCES `gafas_color_vidrio` (`id`),
+  CONSTRAINT `fk_cristal` FOREIGN KEY (`id_cristal`) REFERENCES `gafas_cristal` (`id`),
+  CONSTRAINT `fk_gproveedor` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id`),
+  CONSTRAINT `fk_marca` FOREIGN KEY (`id_marca`) REFERENCES `gafas_marca` (`id`),
+  CONSTRAINT `fk_montura` FOREIGN KEY (`id_montura`) REFERENCES `gafas_montura` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,123 +146,127 @@ CREATE TABLE `gafas` (
 
 LOCK TABLES `gafas` WRITE;
 /*!40000 ALTER TABLE `gafas` DISABLE KEYS */;
+INSERT INTO `gafas` VALUES (1,1,NULL,NULL,NULL,NULL,100,1),(2,2,NULL,NULL,NULL,NULL,80,2),(3,3,NULL,NULL,NULL,NULL,120,1);
 /*!40000 ALTER TABLE `gafas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `gafas.color.montura`
+-- Table structure for table `gafas_color_montura`
 --
 
-DROP TABLE IF EXISTS `gafas.color.montura`;
+DROP TABLE IF EXISTS `gafas_color_montura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gafas.color.montura` (
-  `id.gafas.color.montura` int NOT NULL AUTO_INCREMENT,
-  `color.montura` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.gafas.color.montura`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gafas.color.montura`
---
-
-LOCK TABLES `gafas.color.montura` WRITE;
-/*!40000 ALTER TABLE `gafas.color.montura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gafas.color.montura` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gafas.color.vidrio`
---
-
-DROP TABLE IF EXISTS `gafas.color.vidrio`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gafas.color.vidrio` (
-  `id.gafas.color.vidrio` int NOT NULL AUTO_INCREMENT,
-  `color.vidrio` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.gafas.color.vidrio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gafas.color.vidrio`
---
-
-LOCK TABLES `gafas.color.vidrio` WRITE;
-/*!40000 ALTER TABLE `gafas.color.vidrio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gafas.color.vidrio` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gafas.cristal`
---
-
-DROP TABLE IF EXISTS `gafas.cristal`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gafas.cristal` (
-  `id.gafas.cristal` int NOT NULL AUTO_INCREMENT,
-  `graduacion` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.gafas.cristal`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gafas.cristal`
---
-
-LOCK TABLES `gafas.cristal` WRITE;
-/*!40000 ALTER TABLE `gafas.cristal` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gafas.cristal` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gafas.marca`
---
-
-DROP TABLE IF EXISTS `gafas.marca`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gafas.marca` (
-  `id.gafas.marca` int NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `id.proveedor` int NOT NULL,
-  PRIMARY KEY (`id.gafas.marca`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `gafas.marca`
---
-
-LOCK TABLES `gafas.marca` WRITE;
-/*!40000 ALTER TABLE `gafas.marca` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gafas.marca` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `gafas.montura`
---
-
-DROP TABLE IF EXISTS `gafas.montura`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `gafas.montura` (
-  `id.gafas.montura` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `gafas_color_montura` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `montura` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id.gafas.montura`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `gafas.montura`
+-- Dumping data for table `gafas_color_montura`
 --
 
-LOCK TABLES `gafas.montura` WRITE;
-/*!40000 ALTER TABLE `gafas.montura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `gafas.montura` ENABLE KEYS */;
+LOCK TABLES `gafas_color_montura` WRITE;
+/*!40000 ALTER TABLE `gafas_color_montura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gafas_color_montura` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gafas_color_vidrio`
+--
+
+DROP TABLE IF EXISTS `gafas_color_vidrio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gafas_color_vidrio` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `color` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gafas_color_vidrio`
+--
+
+LOCK TABLES `gafas_color_vidrio` WRITE;
+/*!40000 ALTER TABLE `gafas_color_vidrio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gafas_color_vidrio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gafas_cristal`
+--
+
+DROP TABLE IF EXISTS `gafas_cristal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gafas_cristal` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `graduacion` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gafas_cristal`
+--
+
+LOCK TABLES `gafas_cristal` WRITE;
+/*!40000 ALTER TABLE `gafas_cristal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gafas_cristal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gafas_marca`
+--
+
+DROP TABLE IF EXISTS `gafas_marca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gafas_marca` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `id_proveedor` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_proveedor_idx` (`id_proveedor`),
+  CONSTRAINT `fk_proveedor` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gafas_marca`
+--
+
+LOCK TABLES `gafas_marca` WRITE;
+/*!40000 ALTER TABLE `gafas_marca` DISABLE KEYS */;
+INSERT INTO `gafas_marca` VALUES (1,'Vulk',1),(2,'Reef',1),(3,'Volvom',2);
+/*!40000 ALTER TABLE `gafas_marca` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gafas_montura`
+--
+
+DROP TABLE IF EXISTS `gafas_montura`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gafas_montura` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `montura` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gafas_montura`
+--
+
+LOCK TABLES `gafas_montura` WRITE;
+/*!40000 ALTER TABLE `gafas_montura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `gafas_montura` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -252,13 +279,14 @@ DROP TABLE IF EXISTS `proveedores`;
 CREATE TABLE `proveedores` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
-  `id.direccion` int NOT NULL,
+  `id_direccion` int NOT NULL,
   `telefono` int DEFAULT NULL,
   `fax` int DEFAULT NULL,
   `nif` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `fk_direccion_idx` (`id_direccion`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,6 +295,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
+INSERT INTO `proveedores` VALUES (1,'Proveedor del Sur',1,600343203,2322232,45343),(2,'Proveedor del Norte',2,434343,2342423,43223);
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,12 +307,20 @@ DROP TABLE IF EXISTS `ventas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ventas` (
-  `id.venta` int NOT NULL AUTO_INCREMENT,
-  `id.gafa` int NOT NULL,
-  `id.cliente` int NOT NULL,
-  `id.empleado` int NOT NULL,
-  PRIMARY KEY (`id.venta`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_gafa` int NOT NULL,
+  `id_cliente` int NOT NULL,
+  `id_empleado` int NOT NULL,
+  `fecha` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id.venta_UNIQUE` (`id`),
+  KEY `id_gafa_idx` (`id_gafa`),
+  KEY `id_cliente_idx` (`id_cliente`),
+  KEY `fk_empleado_idx` (`id_empleado`),
+  CONSTRAINT `fk_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`),
+  CONSTRAINT `fk_empleado` FOREIGN KEY (`id_empleado`) REFERENCES `empleados` (`id`),
+  CONSTRAINT `fk_gafa` FOREIGN KEY (`id_gafa`) REFERENCES `gafas` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,6 +329,7 @@ CREATE TABLE `ventas` (
 
 LOCK TABLES `ventas` WRITE;
 /*!40000 ALTER TABLE `ventas` DISABLE KEYS */;
+INSERT INTO `ventas` VALUES (2,1,1,1,'2022-10-25 00:00:00'),(3,1,1,2,'2022-04-05 00:00:00'),(4,1,1,1,'2021-04-05 00:00:00'),(5,1,2,1,'2022-04-15 00:00:00'),(6,1,2,1,'2021-04-15 00:00:00');
 /*!40000 ALTER TABLE `ventas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -304,4 +342,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-19 23:26:57
+-- Dump completed on 2022-11-02 18:24:59
