@@ -27,13 +27,23 @@ newPersona.dirNom();
 
 //Nivel 3
 
+console.log(`
+Nivel 3
+`)
 
 class Person {
 	name;
 	constructor(name) {
-		this.name = name;
+		if (this.constructor == Person) {
+			throw new Error("Person es una classe abstracta y no puede ser instanciada.");
+		}
+	this.name = name
+	}
+	caminar() {
+		console.log("caminando");
 	}
 }
+
 class Power extends Person {
 	constructor(name, nacionalidad, fuerza) {
 		super(name);
@@ -46,5 +56,10 @@ function newPerson(name, nacionalidad, fuerza) {
 	let createPerson = new Power(name, nacionalidad, fuerza);
 	personList.push(createPerson);
 }
+const heroList = [];
 newPerson('Batman', 'Paraguay', '100%');
-console.log(personList[0]);
+
+console.log(`Nombre: ${personList[0].name}`)
+console.log(`Nacionalidad: ${personList[0].nacionalidad}`)
+console.log(`Fuerza: ${personList[0].fuerza}`)
+personList[0].caminar()
