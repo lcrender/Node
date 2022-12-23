@@ -39,9 +39,7 @@ class Person {
 		}
 	this.name = name
 	}
-	caminar() {
-		console.log("caminando");
-	}
+	caminar() {console.log("caminando");}
 }
 
 class Power extends Person {

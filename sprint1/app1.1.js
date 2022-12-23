@@ -24,10 +24,12 @@ Bienvenido al club!
 //Nivel 3, Ejercicio 1
 //Funcion que "contadora" del 0 al 9 por consola
 const funcCounter = () => {
+	let arrayC = []
 	for (i = 0; i < 10; ) {
-		console.log(i);
+		arrayC.push(i)
 		i = i + 1;
 	}
+	console.log(arrayC.join())
 };
 let array = [];
 //Funcion que guarda 10 veces la funcion "contadora" en un array y las va ejecutando

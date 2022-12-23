@@ -1,69 +1,49 @@
-//Nivel 1, ejercicio 1
-//Cuando la constante haveBalance esta en "true" muestra el saldo de la cuenta por medio de la const balanceDetails
-//Cuando la constante haveBalance esta en "False" muestra el mensaje de error "No hay saldo"
-const haveBalance = true;
-const balance = () => {
+console.log(`\nNivel 1 \n`)
+const haveBalance = 0;
+const showBalance = (haveBalance) => {
 	return new Promise((resolve, reject) => {
-		if (haveBalance === true) {
-			const balanceDetails = {
-				Eur: 8000,
-				Usd: 7300,
-				Ars: 2843578
-			};
-			resolve(balanceDetails);
-		} else {
-			reject(new Error('No hay saldo en su cuenta.'));
-		}
+		if (haveBalance > 0) {
+			let msg = "Su saldo es de " + haveBalance + " Euros."
+			resolve(console.log("Su saldo es de " + haveBalance + " Euros."));
+		}  
+		else {reject(console.log('No hay saldo en su cuenta.'));}
 	});
 };
-balance()
-	.then((res) => {
-		console.log('El saldo total del usuario x es de:');
-		console.log(res);
-		console.log(`
-fin de consulta
-
-`);
-	})
+//le paso el saldo 10 euros como parametro a la funcion y luego 0
+showBalance(10)
+showBalance(0)
 	.catch((err) => {
-		console.log(err.message);
-	});
-
-//Nivel 1, ejercicio 2
-const message = (age, callback) => {
+	 	console.log(err);
+	 });
+//////////////////////////////////////
+console.log(`\nNivel 1 Ejercicio 2 \n`)
+//Funcion Callback
+let msg = ""
+const welcome = (msg) => {
+	console.log(msg);
+};
+const message = (age, welcome) => {
 	const userAge = age;
 	if (isNaN(userAge)) {
-		const errorMessage = console.log('ERROR: La edad debe ser un numero');
-		return errorMessage;
-	} else {
-		return callback(userAge);
+		let msg = 'ERROR: La edad debe ser un numero';
+		welcome(msg)
 	}
-};
-//Funcion Callback
-let welcome = (age) => {
 	if (age >= 18) {
-		//Primer mensaje
-		const welcomeMessage = console.log(`Mensaje de bienvenida: 
-Tienes mas de 18 años, eres bienvenido al club
-
-`);
-		return welcomeMessage;
+		let msg = "Mensaje de bienvenida:\nTienes mas de 18 años, eres bienvenido al club.\n\n";
+		welcome(msg)
 	} else {
-		//Segundo mensaje
-		const notWelcomeMessage = console.log(`Mensaje de rechazo:
-Tienes menos de 18 años, NO eres bienvenido
-
-`);
-		return notWelcomeMessage;
+		let msg = "Mensaje de rechazo:\nTienes menos de 18 años, NO eres bienvenido.\n\n";
+		welcome(msg)
 	}
 };
 //La funcion message va seguida de una edad y una funcion callback, en este caso un mensaje de bienvenida al club si es mayor o igual de 18 años.
-//Primer mensaje de la funcion callback
+//Primer mensaje
 message('20', welcome);
-//Segundo mensaje de la funcion callback
+//Segundo mensaje
 message('17', welcome);
-
+//////////////////////////////////////
 //Nivel 2 y 3
+console.log("Nivel 2 y 3\n")
 let employees = [
 	{
 		id: 1,
