@@ -1,20 +1,23 @@
 console.log(`\nNivel 1 \n`)
-const haveBalance = 0;
 const showBalance = (haveBalance) => {
 	return new Promise((resolve, reject) => {
 		if (haveBalance > 0) {
 			let msg = "Su saldo es de " + haveBalance + " Euros."
-			resolve(console.log("Su saldo es de " + haveBalance + " Euros."));
+			resolve(console.log(msg));
 		}  
-		else {reject(console.log('No hay saldo en su cuenta.'));}
+		else {reject('No hay saldo en su cuenta.');}
 	});
 };
-//le paso el saldo 10 euros como parametro a la funcion y luego 0
+//le paso el saldo 10 euros como parametro a la funcion
 showBalance(10)
-showBalance(0)
+	.then((res) => {
+		 console.log(res);
+	})
 	.catch((err) => {
-	 	console.log(err);
-	 });
+		//este .catch me genera un undefined debajo del console.log de la linea 49, no puedo encontrar el por que.
+		 console.log(err);
+	});
+
 //////////////////////////////////////
 console.log(`\nNivel 1 Ejercicio 2 \n`)
 //Funcion Callback
@@ -43,7 +46,7 @@ message('20', welcome);
 message('17', welcome);
 //////////////////////////////////////
 //Nivel 2 y 3
-console.log("Nivel 2 y 3\n")
+console.log('Nivel 2 y 3\n');
 let employees = [
 	{
 		id: 1,
@@ -74,20 +77,20 @@ let salaries = [
 ];
 const getEmployee = (searchId) => {
 	return new Promise((resolve, reject) => {
-		let i = 0;
-		let clientFound = false;
-		while (i < employees.length && clientFound === false) {
-			if (searchId === employees[i].id) {
-                clientFound = true
-                resolve (employees[i].name);
-			} else {
-				i++;
+		let empFound = false;
+		let empName = '';
+		employees.map((i) => {
+			if (searchId === i.id) {
+				empFound = true;
+				empName = i.name;
 			}
-		} // termina el buscador
-		if (clientFound === false) {
-			reject(new Error('Empleado no encontrado.'));
+		});
+		if (empFound === true) {
+			resolve(`Empleado encontrado:\nNombre: ${empName}`);
+		} else {
+			reject(new Error('Usuario no encontrado'));
 		}
-	}); //fin promesa
+	});
 };
 const getSalary = (employeeId) => {
     return new Promise((resolve, reject) => {
@@ -96,32 +99,35 @@ const getSalary = (employeeId) => {
 		while (i < employees.length && clientFound === false) {
 			if (employeeId === employees[i].id) {
                 clientFound = true
-                resolve (salaries[i].salary);
+                resolve (`Salario: ${salaries[i].salary} \n`);
 			} else {
 				i++;
 			}
 		} // termina el buscador
 		if (clientFound === false) {
-			reject(new Error('El id del empleado no existe'));
+			reject(new Error(`No se encontro usuario con id ${employeeId}`));
 		}
 	}); //fin promesa
 };
 
 const search = (id) => {
     getEmployee(id)
-		.then((res) => {
-			console.log(res);
-		})
-		.catch((err) => {
-			console.log(err.message);
-		});
+ 		.then((res) => {
+ 			console.log(res);
+ 		})
+ 		.catch((err) => {
+ 			return (err.message);
+ 		});
     getSalary(id)
         .then((res) => {
-        console.log(res);
+            console.log(res);
         })
         .catch((err) => {
-             console.log(err.message);
+            console.log(err.message);
         });
-    };
-//Ejecuta las funciones getEmployee y getSalary anidadas
-search(1);
+};
+search(0)
+search(1)
+search(2)
+search(3)
+search(4)
