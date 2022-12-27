@@ -111,7 +111,9 @@ async function add(n1, n2, n3) {
 	return console.log(finalResult); //en el enunciado del ejercicio no pide que se muestre por consola pero yo lo agrego para poder ver el resultado correcto de la funcion.
 }
 //Ejecuto funcion para sumar 3 numeros y multiplicar por 2
-add(4, 4, 8).catch((err) => {
+try {
+    add(1, 1, 1)
+}
+catch(err) {
 	console.log(err.message);
-});
-//Nivel 3 agrego los .catch
+};
