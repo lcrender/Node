@@ -1,9 +1,11 @@
-createFile() => Crea archivo ./data/hello.txt
-read() => Lee el archivo hello.txt
-compGzip() => Comprime el archivo .txt en un .gzip
+createFile() => Crea archivo hello.txt
+readFile() => Lee el contenido del archivo hello.txt
+gzipFile() => Comprime el archivo .txt en un .gzip
 sing(4) => repite un mensaje 4 veces
-firstConvert() => Codifica el archivo .txt en Hexadecimal y Base64
-cOne() => Encripta los archivos codificados en AES-192-CBC
-cTwo() => Borra los archivos codificados, el .txt y el .gzip
-cTrhee() => Desencripta los archivos.
+listUserFolder() => lee la carpeta home del usuario activo
+firstStep() => Codifica el contenido del archivo .txt en otros 2 archivos Hexadecimal y Base64
+secondStep() => Esta funcion espera el resultado de fisrtStep() y encripta los archivos codificados en AES-192-CBC, por ultimo borra los archivos que codifica firstStep()
+extract() => Desencripta los archivos encriptados
+
+
 
