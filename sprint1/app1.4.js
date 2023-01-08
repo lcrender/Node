@@ -27,12 +27,12 @@ let salaries = [
 	}
 ];
 //Nivel 1, ejercicio 1
-const getEmployee = (searchId) => {
+const getEmployee = (id) => {
 	return new Promise((resolve, reject) => {
 		let i = 0;
 		let clientFound = false;
 		while (i < employees.length && clientFound === false) {
-			if (searchId === employees[i].id) {
+			if (id === employees[i].id) {
 				clientFound = true;
 				resolve(employees[i].name);
 			} else {
@@ -105,8 +105,10 @@ const math = (n) => {
 };
 //funcion para sumar 3 numeros y multiplicar por 2
 async function add(n1, n2, n3) {
-	let total = n1 + n2 + n3;
-	const finalResult = await math(total);
+	let v1 = await math(n1);
+	let v2 = await math(n2);
+	let v3 = await math(n3);
+	let finalResult = v1 + v2 + v3;
 	//return finalResult;
 	return console.log(finalResult); //en el enunciado del ejercicio no pide que se muestre por consola pero yo lo agrego para poder ver el resultado correcto de la funcion.
 }
