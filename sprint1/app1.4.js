@@ -62,15 +62,16 @@ const getSalary = (employeeId) => {
 	});
 };
 async function search(id) {
+	try {
 	const employeeMsj = await getEmployee(id);
 	const salaryMsj = await getSalary(id);
 	const resumenMsj = employeeMsj + ' ' + salaryMsj;
-	return console.log(resumenMsj);
+	console.log(resumenMsj);
+	} catch (error) {
+		console.log(error)
+	}
 }
-//Ejecuta las funciones getEmployee y getSalary anidadas
-search(1).catch((err) => {
-	console.log(err.message);
-});
+search(1);
 
 //Nivel 1, ejercicio 2
 //esta funcion saluda a alguien despues de 2000ms
@@ -83,8 +84,12 @@ const goodbye = (name) => {
 	});
 };
 async function sayGoodbye(name) {
+	try {
 	const bye = await goodbye(name);
-	return console.log(bye);
+	console.log(bye);
+	} catch (error) {
+		console.log(error)
+	}
 }
 //Ejecuta funcion saludar a alguien
 sayGoodbye('Humberto');
@@ -96,26 +101,22 @@ const math = (n) => {
 		if (isNaN(n)) {
 			reject(new Error('ERROR Eso no parece un numero!'));
 		} else {
-			const multy = n * 2;
 			setTimeout(() => {
-				resolve(multy);
+				resolve(n * 2);
 			}, 2000);
 		}
 	});
 };
 //funcion para sumar 3 numeros y multiplicar por 2
 async function add(n1, n2, n3) {
+	try {
 	let v1 = await math(n1);
 	let v2 = await math(n2);
 	let v3 = await math(n3);
 	let finalResult = v1 + v2 + v3;
-	//return finalResult;
-	return console.log(finalResult); //en el enunciado del ejercicio no pide que se muestre por consola pero yo lo agrego para poder ver el resultado correcto de la funcion.
+	console.log(finalResult);
+	} catch (error) {
+		console.log(error)
+	}
 }
-//Ejecuto funcion para sumar 3 numeros y multiplicar por 2
-try {
-    add(1, 1, 1)
-}
-catch(err) {
-	console.log(err.message);
-};
+add(1, 1, 1);
