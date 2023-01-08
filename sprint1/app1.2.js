@@ -1,18 +1,22 @@
-//Nivel 1
+// Mostrar por consola el resultado de un arrow function autoinvocable que sume dos numeros
+console.log(`\nNivel 1\n`)
 console.log((( num1, num2 ) => {
     return ( num1 + num2 );
   })( 2, 8 ))
 
-//Nivel 2, ejercicio 1
+// Crea una arrow function que, recibiendo un parámetro, devuelva un objeto con un atributo que tenga como valor el parámetro recibido.
+console.log(`\nNivel 2-1\n`)
 const createScenery = (scenary) => {
     let obj = new Object()
     obj.ciudad = scenary
     return obj
 }
 //Ejemplo para probar la funcion
-//console.log(createScenery("Ciudad Gotica"))
+const ciudadG = createScenery("Ciudad Gotica")
+console.log(ciudadG.ciudad)
 
-//Nivel 2, ejercicio 2
+// Crea una clase "Persona" que reciba un parámetro 'nom' al ser instanciada. La clase incluirá un método llamado Nombre que imprima por consola el parámetro 'nom'. Invoca el método llamado Nombre desde fuera de la clase.
+console.log(`\nNivel 2-2\n`)
 class Persona {
 	nom;
 	constructor(nom) {
@@ -25,39 +29,47 @@ class Persona {
 const newPersona = new Persona('Batman');
 newPersona.dirNom();
 
-//Nivel 3
-
-console.log(`
-Nivel 3
-`)
-
+// Escribe una función creadora de objetos que realice instancias de una clase abstracta. Inbócala con diferentes definiciones.
+console.log(`\nNivel 3\n`)
 class Person {
-	name;
-	constructor(name) {
-		if (this.constructor == Person) {
+	constructor() {
+		if (this.constructor === Person) {
 			throw new Error("Person es una classe abstracta y no puede ser instanciada.");
 		}
-	this.name = name
-	}
-	caminar() {console.log("caminando");}
-}
-
-class Power extends Person {
-	constructor(name, nacionalidad, fuerza) {
-		super(name);
-		this.nacionalidad = nacionalidad;
-		this.fuerza = fuerza;
 	}
 }
-const personList = [];
-function newPerson(name, nacionalidad, fuerza) {
-	let createPerson = new Power(name, nacionalidad, fuerza);
-	personList.push(createPerson);
+class Espanol extends Person {
+	constructor() {
+		super();
+		this.name = "Español";
+	}
 }
-const heroList = [];
-newPerson('Batman', 'Paraguay', '100%');
-
-console.log(`Nombre: ${personList[0].name}`)
-console.log(`Nacionalidad: ${personList[0].nacionalidad}`)
-console.log(`Fuerza: ${personList[0].fuerza}`)
-personList[0].caminar()
+class Italiano extends Person {
+	constructor() {
+		super();
+		this.name = "Italiano";
+	}
+}
+class Frances extends Person {
+	constructor() {
+		super();
+		this.name = "Frances";
+	}
+}
+function newPerson(name) {
+	switch (name) {
+	  case 'Español':
+		return new Espanol();
+	  case 'Italiano':
+		return new Italiano();
+	  case 'Frances':
+		return new Frances();
+	  default:
+		throw new Error('Esta persona no existe');
+	}
+  }
+  
+  let person = newPerson('Italiano');
+  
+  console.log(person.name);
+  console.log(typeof person);

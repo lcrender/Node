@@ -1,30 +1,20 @@
-const fs = require('fs');
+let fs = require('fs')
+require('events').EventEmitter.prototype._maxListeners = 100;
 //Nivel 1, ejercicio 1
 
-const createFile = () => {
-	let message = `Hola mundo`;
-	fs.writeFile('./hello.txt', message, function(err) {
+function createFile () {
+	return new Promise ((resolve, reject) => {
+		let message = `Hola mundo`;
+		fs.writeFile('./hello.txt', message, function(err) {
 		if (err) {
-			console.log(err);
+			reject (new Error(err));
 		}
-		//console.log('Archivo creado');
+		resolve ('Archivo creado');
+		});
 	});
 };
-//Ejecuta la funcion
-createFile();
 
-//Nivel 1, ejercicio 2
-const read = () => {
-	fs.readFile('./hello.txt', function(err, data) {
-		if (err) {
-			console.log(err);
-		}
-		const readFile = data.toString();
-		console.log(readFile);
-	});
-};
-//Ejecuta la funcion
-read();
+
 
 //Nivel 1, Ejercicio 3
 
@@ -44,7 +34,6 @@ pipeline(source, gzip, destination, (err) => {
 });
 
 //Nivel 2, ejercicio 1
-//El programa cantara una pequeña cancion de daftpunk que conlleva una letra muy elaborada (ironicamente hablando) para hacer una pausa relajante
 let sing = (numero) => {
 	setTimeout(() => {
 		if (numero === 0) {
@@ -76,33 +65,104 @@ listUserFolder()
 
 //Nivel 3
 
-const firstConvert = () => {
-	fs.readFile('./hello.txt', function(err, data) {
-		if (err) {
-			console.log(err);
-		}
-		const readFile = data.toString();
-		const newBuffer = Buffer.from(readFile);
-		const hex = newBuffer.toString('hex');
-		const base64 = newBuffer.toString('base64');
-		fs.writeFile('./hello.hex.txt', hex, function(err) {
+function firstConvert () {
+	return new Promise((resolve, reject) => {
+		fs.readFile('./hello.txt', function(err, data) {
 			if (err) {
-				console.log(err);
+				reject(new Error(err));
 			}
-			console.log('Archivo hexadecimal creado');
+			const readFile = data.toString();
+			const newBuffer = Buffer.from(readFile);
+			const hex = newBuffer.toString('hex');
+			const base64 = newBuffer.toString('base64');
+			fs.writeFile('./hello.hex.txt', hex, function(err) {
+				if (err) {
+					reject(new Error(err));
+				}
+				console.log('Archivo hexadecimal creado');
+			});
+			fs.writeFile('./hello.base64.txt', base64, function(err) {
+				if (err) {
+					console.log(err);
+				}
+				console.log('Archivo base64 creado');
+			});
 		});
-		fs.writeFile('./hello.base64.txt', base64, function(err) {
-			if (err) {
-				console.log(err);
-			}
-			console.log('Archivo base64 creado');
-		});
-	});
+		resolve ("Archivos Codificados");
+	})
+	
 };
+
+
+const {
+	scrypt,
+	randomFill,
+	createCipheriv
+  } =  require('node:crypto');
+  
+  const algorithm = 'aes-192-cbc';
+  const password = 'alibaba';
+  
+function cOne() {
+	return new Promise ((resolve, reject) => {
+		scrypt(password, 'salt', 24, (err, key) => {
+			if (err) throw err;
+			// Then, we'll generate a random initialization vector
+			randomFill(new Uint8Array(16), (err, iv) => {
+			  if (err) throw err;
+			  const cipher = createCipheriv(algorithm, key, iv);
+			  const inputB64 = createReadStream('./hello.base64.txt');
+			  const outputB64 = createWriteStream('./hello.base64.enc');
+			  const inputHex = createReadStream('./hello.hex.txt');
+			  const outputHex = createWriteStream('./hello.hex.enc');
+			  pipeline(inputB64, cipher, outputB64, (err) => {
+				if (err) { reject(new Error(err))}
+			  });
+			  pipeline(inputHex, cipher, outputHex, (err) => {
+				  if (err) { reject(new Error(err))}
+			  });
+			});
+		  });
+		resolve (console.log("Archivos encriptados"))
+
+
+	})
+}
+
+fs = require('fs').promises
+const cTwo = () => {
+fs.unlink('hello.base64.txt')
+fs.unlink('hello.hex.txt')
+  .then(() => {
+    console.log('Files removed')
+  }).catch(err => {
+    console.error('Something wrong happened removing the file', err)
+  })
+}
+
+//Crea archivo hello.txt
+createFile()
+	.then((res)=> {
+		console.log(res)
+	})
+	.catch((err)=>{
+		console.log(err)
+	});
+
+
+
+
 //Ejecuto la funcion para crear 2 archivos codificados
 firstConvert()
+	.then
 
-//var crypto  = require( 'crypto' );
-//var cipher  = crypto.createCipher( 'aes-192-ecb', datasources.api.auth.encryptionKey );
+cOne()
+	.then((res) => {
+		console.log(res)
+		cTwo()
+	})
+	.catch((err) => {
+		console.log(err)
+	})
+// cTwo()
 
-  
