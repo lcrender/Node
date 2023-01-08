@@ -1,5 +1,5 @@
 let balance = 10;
-function retornaPromesa () {
+function haveBalance () {
 	return new Promise( ( resolve, reject ) => {
 	  if ( balance > 0 ) {
 		resolve( "Su saldo es de " + balance + " Euros" );
@@ -9,9 +9,9 @@ function retornaPromesa () {
 	});
   };
   
-  retornaPromesa()
-	.then( ( res ) => console.log( res ) )
-	.catch( ( err ) => console.log( err ) );
+  haveBalance()
+	.then((res) => console.log(res))
+	.catch((err) => console.log(err));
 
 //////////////////////////////////////
 console.log(`\nNivel 1 Ejercicio 2 \n`)
